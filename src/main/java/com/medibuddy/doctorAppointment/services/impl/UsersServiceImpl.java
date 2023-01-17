@@ -1,4 +1,4 @@
-package com.medibuddy.doctorAppointment.services;
+package com.medibuddy.doctorAppointment.services.impl;
 
 import com.medibuddy.doctorAppointment.entities.User;
 import com.medibuddy.doctorAppointment.exceptions.ResourceNotFound;
@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class UsersService {
+public class UsersServiceImpl {
 
     @Autowired
     UsersRepository usersRepository;
@@ -34,8 +34,7 @@ public class UsersService {
 
     public UserDto addUser(UserDto userDto){
         User user = userDtoToUser(userDto);
-        User savedUser = usersRepository.save(user);
-        return userToUserDto(savedUser);
+        return userToUserDto(usersRepository.save(user));
     }
 
     public UserDto updateUser(UserDto userDto , int userId){
@@ -63,13 +62,10 @@ public class UsersService {
 
     public UserDto userToUserDto(User user){
         UserDto userDto = new UserDto();
-
         userDto.setId(user.getId());
         userDto.setName(user.getName());
         userDto.setEmail(user.getEmail());
         userDto.setPassword(user.getPassword());
-
-
         return userDto;
     }
 
@@ -83,4 +79,3 @@ public class UsersService {
     }
 
 }
-

@@ -1,23 +1,17 @@
-package com.medibuddy.doctorAppointment.entities;
+package com.medibuddy.doctorAppointment.paylods;
 
-import javax.persistence.*;
 
-@Entity
-@Table(name = "users")
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+public class UserDto {
+
     private int id;
-
-    @Column(nullable = false)
     private String name;
     private String email;
     private String password;
 
-    public User() {
+    public UserDto() {
     }
 
-    public User(int id, String name, String email, String password) {
+    public UserDto(int id, String name, String email, String password) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -54,15 +48,5 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                '}';
     }
 }

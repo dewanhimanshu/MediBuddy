@@ -1,8 +1,10 @@
 package com.medibuddy.doctorAppointment.controllers;
 
 
-import com.medibuddy.doctorAppointment.entities.User;
+import com.medibuddy.doctorAppointment.paylods.ApiResponse;
+import com.medibuddy.doctorAppointment.paylods.UserDto;
 import com.medibuddy.doctorAppointment.services.UsersService;
+import com.medibuddy.doctorAppointment.utils.JsonMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,63 +13,51 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/api/v1/users")
 public class UsersController {
+
     @Autowired
     UsersService usersService;
 
-    @GetMapping("/users")
-    public ResponseEntity<List<User>> getAllUsers(){
-        try {
-            List<User> list =  usersService.getAllUsers();
-            return new ResponseEntity<List<User>>(list, HttpStatus.OK);
-        }catch (Exception e){
-            e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    @GetMapping("")
+    public ResponseEntity<ApiResponse<List<UserDto>>> getAllUsers(){
+            List<UserDto> list =  usersService.getAllUsers();
+            return new ResponseEntity<ApiResponse<List<UserDto>>>(new ApiResponse<>(JsonMessage.SUCCESSFUL,list) , HttpStatus.OK);
+
     }
 
-    @GetMapping("/users/{id}")
-    public ResponseEntity<User> getUser(@PathVariable String id){
-        try{
-            User user = usersService.getUser(Integer.parseInt(id));
-            return new ResponseEntity<User>(user, HttpStatus.OK);
-        }catch (Exception e){
-            e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    @GetMapping("/{id}")
+    public ResponseEntity<ApiResponse<UserDto>> getUser(@PathVariable String id){
+            UserDto userDto = usersService.getUser(Integer.parseInt(id));
+            return new ResponseEntity<ApiResponse<UserDto>>(new ApiResponse<>(JsonMessage.SUCCESSFUL,userDto), HttpStatus.OK);
     }
 
-    @PostMapping("/users")
-    public ResponseEntity<User> addUser(@RequestBody User user){
-        try{
-            User u = usersService.addUser(user);
-            return new ResponseEntity<User>(u, HttpStatus.OK);
-        }catch (Exception e){
-            e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+
+    @PostMapping("")
+    public ResponseEntity<ApiResponse<UserDto>> addUser(@RequestBody UserDto userDto){
+
+            UserDto createdUserDto = usersService.addUser(userDto);
+            return new ResponseEntity<>(
+                    new ApiResponse<>(JsonMessage.SUCCESSFUL,createdUserDto),
+                    HttpStatus.CREATED);
+
     }
 
-    @PutMapping("/users/{id}")
-    public ResponseEntity<User> updateUser(@RequestBody User user ,@PathVariable String id){
-        try{
-            User u = usersService.updateUser(user,Integer.parseInt(id));
-            return new ResponseEntity<User>(u, HttpStatus.OK);
-        }catch (Exception e){
-            e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    @PutMapping("/{id}")
+    public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto ,@PathVariable String id){
+
+            UserDto updatedUserDto= usersService.updateUser(userDto,Integer.parseInt(id));
+            return new ResponseEntity<UserDto>(updatedUserDto, HttpStatus.OK);
+
     }
 
-    @DeleteMapping("/users/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable String id){
-        try{
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ApiResponse<Void>> deleteUser(@PathVariable String id){
+
             usersService.deleteUser(Integer.parseInt(id));
-            return new ResponseEntity<>(HttpStatus.OK);
-        }catch (Exception e){
-            e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+            System.out.println("Run");
+            return new ResponseEntity<>(new ApiResponse<Void>(JsonMessage.SUCCESSFUL,null),HttpStatus.OK);
+
     }
 
 }
