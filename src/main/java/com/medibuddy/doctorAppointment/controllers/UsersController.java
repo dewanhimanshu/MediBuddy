@@ -1,8 +1,15 @@
 package com.medibuddy.doctorAppointment.controllers;
 
 
+import com.medibuddy.doctorAppointment.entities.Address;
+import com.medibuddy.doctorAppointment.entities.Appointment;
+import com.medibuddy.doctorAppointment.entities.Doctor;
+import com.medibuddy.doctorAppointment.entities.User;
 import com.medibuddy.doctorAppointment.paylods.ApiResponse;
 import com.medibuddy.doctorAppointment.paylods.UserDto;
+import com.medibuddy.doctorAppointment.repositories.AppointmnetRepository;
+import com.medibuddy.doctorAppointment.repositories.DoctorRepository;
+import com.medibuddy.doctorAppointment.repositories.UsersRepository;
 import com.medibuddy.doctorAppointment.services.UsersService;
 import com.medibuddy.doctorAppointment.utils.JsonMessage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +26,43 @@ public class UsersController {
 
     @Autowired
     UsersService usersService;
+
+    @Autowired
+    UsersRepository usersRepository;
+
+    @Autowired
+    DoctorRepository doctorRepository;
+
+    @Autowired
+    AppointmnetRepository appointmnetRepository;
+
+    @GetMapping("/test")
+    public User test(){
+//        Doctor d1 = new Doctor(1,"Modi","General");
+//        d1 = doctorRepository.save(d1);
+//
+//        User u1 = usersRepository.findById(4).get();
+//        Appointment a = new Appointment();
+//
+//        a.setUser(u1);
+//        a.setDoctor(d1);
+//
+//        d1.getAppointments().add(a);
+//        u1.getAppointmentList().add(a);
+//
+//        appointmnetRepository.save(a);
+
+        return appointmnetRepository.findById(25).get().getUser();
+
+
+
+
+
+
+
+    }
+
+
 
     @GetMapping("")
     public ResponseEntity<ApiResponse<List<UserDto>>> getAllUsers(){

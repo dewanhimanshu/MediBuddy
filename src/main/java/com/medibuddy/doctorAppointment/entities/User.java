@@ -1,10 +1,16 @@
 package com.medibuddy.doctorAppointment.entities;
 
+
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
@@ -14,14 +20,20 @@ public class User {
     private String email;
     private String password;
 
+//    @OneToOne(mappedBy = "user" , cascade = CascadeType.ALL)
+//    private Address address;
+    @OneToMany(mappedBy = "user")
+    List<Appointment> appointmentList = new ArrayList<>();
+
     public User() {
     }
 
-    public User(int id, String name, String email, String password) {
+    public User(int id, String name, String email, String password ) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
+
     }
 
     public int getId() {
@@ -54,6 +66,15 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @JsonIgnore
+    public List<Appointment> getAppointmentList() {
+        return appointmentList;
+    }
+
+    public void setAppointmentList(List<Appointment> appointmentList) {
+        this.appointmentList = appointmentList;
     }
 
     @Override
