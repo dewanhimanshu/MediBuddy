@@ -4,7 +4,7 @@ import com.medibuddy.doctorAppointment.entities.Appointment;
 import com.medibuddy.doctorAppointment.paylods.ApiResponse;
 import com.medibuddy.doctorAppointment.repositories.AppointmnetRepository;
 import com.medibuddy.doctorAppointment.services.AppointmentService;
-import com.medibuddy.doctorAppointment.utils.JsonMessage;
+import com.medibuddy.doctorAppointment.utils.JSONMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,7 +43,7 @@ public class AppointmentsController {
     public ResponseEntity<ApiResponse<Void>> deleteAppointment(@PathVariable int id){
         appointmentService.deleteAppointment(id);
         return new ResponseEntity<>(
-                new ApiResponse<>(JsonMessage.SUCCESSFUL,null),
+                new ApiResponse<>(JSONMessage.SUCCESSFUL,null),
                 HttpStatus.OK
         );
     }

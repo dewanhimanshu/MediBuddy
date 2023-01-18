@@ -1,6 +1,6 @@
 package com.medibuddy.doctorAppointment.utils;
 
-public enum JsonMessage {
+public enum JSONMessage {
     SUCCESSFUL,
     FAIL
 }
