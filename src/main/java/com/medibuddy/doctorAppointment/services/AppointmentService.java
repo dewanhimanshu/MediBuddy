@@ -9,9 +9,10 @@ import com.medibuddy.doctorAppointment.repositories.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
+
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class AppointmentService {
@@ -24,7 +25,13 @@ public class AppointmentService {
     @Autowired
     DoctorRepository doctorRepository;
 
-    
+    public List<Appointment> getAllAppointments(){
+        return appointmnetRepository.findAll().stream().collect(Collectors.toList());
+    }
+
+    public Appointment getAppointment(int id){
+        return appointmnetRepository.findById(id).get();
+    }
 
     public Appointment addAppointment(Map<String,String> map){
         User user = usersRepository.findById(Integer.valueOf(map.get("userId"))).get();
@@ -36,5 +43,9 @@ public class AppointmentService {
         appointment.setPlace(map.getOrDefault("place",""));
         return  appointmnetRepository.save(appointment);
 
+    }
+
+    public void deleteAppointment(int id) {
+        appointmnetRepository.deleteById(id);
     }
 }
