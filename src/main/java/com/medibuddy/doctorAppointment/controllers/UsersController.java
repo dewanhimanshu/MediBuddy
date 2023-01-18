@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -34,7 +35,7 @@ public class UsersController {
 
 
     @PostMapping("")
-    public ResponseEntity<ApiResponse<UserDto>> addUser(@RequestBody UserDto userDto){
+    public ResponseEntity<ApiResponse<UserDto>> addUser(@Valid @RequestBody UserDto userDto){
 
             UserDto createdUserDto = usersService.addUser(userDto);
             return new ResponseEntity<>(
@@ -44,7 +45,7 @@ public class UsersController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto ,@PathVariable String id){
+    public ResponseEntity<UserDto> updateUser(@Valid @RequestBody UserDto userDto ,@PathVariable String id){
 
             UserDto updatedUserDto= usersService.updateUser(userDto,Integer.parseInt(id));
             return new ResponseEntity<UserDto>(updatedUserDto, HttpStatus.OK);
@@ -55,7 +56,6 @@ public class UsersController {
     public ResponseEntity<ApiResponse<Void>> deleteUser(@PathVariable String id){
 
             usersService.deleteUser(Integer.parseInt(id));
-            System.out.println("Run");
             return new ResponseEntity<>(new ApiResponse<Void>(JsonMessage.SUCCESSFUL,null),HttpStatus.OK);
 
     }

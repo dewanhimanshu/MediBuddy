@@ -4,6 +4,7 @@ import com.medibuddy.doctorAppointment.entities.User;
 import com.medibuddy.doctorAppointment.exceptions.ResourceNotFound;
 import com.medibuddy.doctorAppointment.paylods.UserDto;
 import com.medibuddy.doctorAppointment.repositories.UsersRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,9 @@ public class UsersService {
 
     @Autowired
     UsersRepository usersRepository;
+
+    @Autowired
+    ModelMapper modelMapper;
 
     public List<UserDto> getAllUsers(){
         List<User> list = usersRepository.findAll();
@@ -62,23 +66,12 @@ public class UsersService {
     }
 
     public UserDto userToUserDto(User user){
-        UserDto userDto = new UserDto();
-
-        userDto.setId(user.getId());
-        userDto.setName(user.getName());
-        userDto.setEmail(user.getEmail());
-        userDto.setPassword(user.getPassword());
-
-
+        UserDto userDto = modelMapper.map(user,UserDto.class);
         return userDto;
     }
 
     public User userDtoToUser(UserDto userDto){
-        User user = new User();
-        user.setId(userDto.getId());
-        user.setName(userDto.getName());
-        user.setEmail(userDto.getEmail());
-        user.setPassword(userDto.getPassword());
+        User user = modelMapper.map(userDto,User.class);
         return user;
     }
 

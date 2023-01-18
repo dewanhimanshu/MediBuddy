@@ -1,10 +1,15 @@
 package com.medibuddy.doctorAppointment.paylods;
 
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+
 public class UserDto {
 
     private int id;
+    @NotEmpty(message = "name cant be empty or null")
     private String name;
+    @Email(message = "should be valid email")
     private String email;
     private String password;
 
