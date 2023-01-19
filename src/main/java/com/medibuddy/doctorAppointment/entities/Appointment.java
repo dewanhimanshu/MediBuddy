@@ -4,7 +4,9 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Data
 @Entity
@@ -25,7 +27,9 @@ public class Appointment {
 
     String place;
 
-    LocalDateTime time;
+    LocalDate appointmentDate;
+    LocalTime appointmentTime;
+
 
     @CreationTimestamp
     LocalDateTime createdAt;

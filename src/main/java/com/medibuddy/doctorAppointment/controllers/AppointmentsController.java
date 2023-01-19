@@ -35,7 +35,7 @@ public class AppointmentsController {
     }
 
     @PostMapping("")
-    public Appointment addAppointment(@RequestBody Map<String,String> map){
+    public Appointment addAppointment(@RequestBody Map<String,String> map) throws Exception{
         return appointmentService.addAppointment(map);
     }
 
