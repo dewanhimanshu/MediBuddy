@@ -23,8 +23,11 @@ public class UsersController {
     UsersService usersService;
 
     @GetMapping("")
-    public ResponseEntity<ApiResponse<List<UserDto>>> getAllUsers(){
-            List<UserDto> list =  usersService.getAllUsers();
+    public ResponseEntity<ApiResponse<List<UserDto>>> getAllUsers(
+            @RequestParam(value = "pageNumber" , defaultValue = "0" , required = false) int pageNumber,
+            @RequestParam(value = "pageSize" , defaultValue = "5" , required = false) int pageSize
+    ){
+            List<UserDto> list =  usersService.getAllUsers(pageNumber,pageSize);
             return new ResponseEntity<ApiResponse<List<UserDto>>>(new ApiResponse<>(JSONMessage.SUCCESSFUL,list) , HttpStatus.OK);
 
     }

@@ -1,7 +1,7 @@
 package com.medibuddy.doctorAppointment.services.impl;
 
 import com.medibuddy.doctorAppointment.entities.User;
-import com.medibuddy.doctorAppointment.exceptions.ResourceNotFound;
+import com.medibuddy.doctorAppointment.exceptions.ResourceNotFoundException;
 import com.medibuddy.doctorAppointment.paylods.UserDto;
 import com.medibuddy.doctorAppointment.repositories.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ public class UsersServiceImpl {
         try{
             user = usersRepository.findById(userId).get();
         }catch (Exception e){
-            throw  new ResourceNotFound("User","UserID",String.valueOf(userId));
+            throw  new ResourceNotFoundException("User","UserID",String.valueOf(userId));
         }
 
         return userToUserDto(user);
@@ -46,7 +46,7 @@ public class UsersServiceImpl {
             User savedUser = usersRepository.save(user);
             return this.userToUserDto(savedUser);
         }catch (Exception e){
-            throw  new ResourceNotFound("User","UserID",String.valueOf(userId));
+            throw  new ResourceNotFoundException("User","UserID",String.valueOf(userId));
         }
 
     }
@@ -56,7 +56,7 @@ public class UsersServiceImpl {
             User user = usersRepository.findById(userId).get();
             usersRepository.deleteById(userId);
         }catch (Exception e){
-            throw  new ResourceNotFound("User","UserID",String.valueOf(userId));
+            throw  new ResourceNotFoundException("User","UserID",String.valueOf(userId));
         }
     }
 

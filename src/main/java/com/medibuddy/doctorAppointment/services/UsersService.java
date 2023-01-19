@@ -1,11 +1,12 @@
 package com.medibuddy.doctorAppointment.services;
 
 import com.medibuddy.doctorAppointment.entities.User;
-import com.medibuddy.doctorAppointment.exceptions.ResourceNotFound;
+import com.medibuddy.doctorAppointment.exceptions.ResourceNotFoundException;
 import com.medibuddy.doctorAppointment.paylods.UserDto;
 import com.medibuddy.doctorAppointment.repositories.UsersRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,8 +21,8 @@ public class UsersService {
     @Autowired
     ModelMapper modelMapper;
 
-    public List<UserDto> getAllUsers(){
-        List<User> list = usersRepository.findAll();
+    public List<UserDto> getAllUsers(int pageNumber , int pageSize){
+        List<User> list = usersRepository.findAll(PageRequest.of(pageNumber,pageSize)).getContent();
         return list.stream().map(user -> this.userToUserDto(user)).collect(Collectors.toList());
     }
 
@@ -30,7 +31,7 @@ public class UsersService {
         try{
             user = usersRepository.findById(userId).get();
         }catch (Exception e){
-            throw  new ResourceNotFound("User","UserID",String.valueOf(userId));
+            throw  new ResourceNotFoundException("User","UserID",String.valueOf(userId));
         }
 
         return userToUserDto(user);
@@ -51,7 +52,7 @@ public class UsersService {
             User savedUser = usersRepository.save(user);
             return this.userToUserDto(savedUser);
         }catch (Exception e){
-            throw  new ResourceNotFound("User","UserID",String.valueOf(userId));
+            throw  new ResourceNotFoundException("User","UserID",String.valueOf(userId));
         }
 
     }
@@ -61,7 +62,7 @@ public class UsersService {
             User user = usersRepository.findById(userId).get();
             usersRepository.deleteById(userId);
         }catch (Exception e){
-            throw  new ResourceNotFound("User","UserID",String.valueOf(userId));
+            throw  new ResourceNotFoundException("User","UserID",String.valueOf(userId));
         }
     }
 
