@@ -7,6 +7,7 @@ import com.medibuddy.doctorAppointment.repositories.UsersRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,8 +22,10 @@ public class UsersService {
     @Autowired
     ModelMapper modelMapper;
 
-    public List<UserDto> getAllUsers(int pageNumber , int pageSize){
-        List<User> list = usersRepository.findAll(PageRequest.of(pageNumber,pageSize)).getContent();
+    public List<UserDto> getAllUsers(int pageNumber , int pageSize , String sortBy , String sortDir){
+
+        Sort sort = (sortDir.equalsIgnoreCase("asc")) ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+        List<User> list = usersRepository.findAll(PageRequest.of(pageNumber,pageSize,sort)).getContent();
         return list.stream().map(user -> this.userToUserDto(user)).collect(Collectors.toList());
     }
 

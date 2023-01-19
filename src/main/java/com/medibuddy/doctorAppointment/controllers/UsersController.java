@@ -2,6 +2,7 @@ package com.medibuddy.doctorAppointment.controllers;
 
 
 
+import com.medibuddy.doctorAppointment.entities.Address;
 import com.medibuddy.doctorAppointment.paylods.ApiResponse;
 import com.medibuddy.doctorAppointment.paylods.UserDto;
 
@@ -22,12 +23,15 @@ public class UsersController {
     @Autowired
     UsersService usersService;
 
+
     @GetMapping("")
     public ResponseEntity<ApiResponse<List<UserDto>>> getAllUsers(
             @RequestParam(value = "pageNumber" , defaultValue = "0" , required = false) int pageNumber,
-            @RequestParam(value = "pageSize" , defaultValue = "5" , required = false) int pageSize
+            @RequestParam(value = "pageSize" , defaultValue = "5" , required = false) int pageSize,
+            @RequestParam(value = "sortBy" , defaultValue = "id" , required = false) String sortBy,
+            @RequestParam(value = "sortDir" , defaultValue = "asc" , required = false) String sortDir
     ){
-            List<UserDto> list =  usersService.getAllUsers(pageNumber,pageSize);
+            List<UserDto> list =  usersService.getAllUsers(pageNumber,pageSize,sortBy,sortDir);
             return new ResponseEntity<ApiResponse<List<UserDto>>>(new ApiResponse<>(JSONMessage.SUCCESSFUL,list) , HttpStatus.OK);
 
     }
