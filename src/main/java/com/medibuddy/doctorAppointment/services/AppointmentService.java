@@ -83,4 +83,14 @@ public class AppointmentService {
     public void deleteAppointment(int id) {
         appointmnetRepository.deleteById(id);
     }
+
+    public List<Appointment> getAllAppointmentsOfUser(int userId) {
+        User user = usersRepository.findById(userId).get();
+        return appointmnetRepository.findByUser(user);
+    }
+
+    public List<Appointment> getAllAppointmentsOfDoctor(int doctorId){
+        Doctor doctor = doctorRepository.findById(doctorId).get();
+        return appointmnetRepository.findByDoctor(doctor);
+    }
 }

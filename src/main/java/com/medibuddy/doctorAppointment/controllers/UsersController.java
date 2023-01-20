@@ -1,8 +1,5 @@
 package com.medibuddy.doctorAppointment.controllers;
 
-
-
-import com.medibuddy.doctorAppointment.entities.Address;
 import com.medibuddy.doctorAppointment.paylods.ApiResponse;
 import com.medibuddy.doctorAppointment.paylods.UserDto;
 

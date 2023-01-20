@@ -48,4 +48,14 @@ public class AppointmentsController {
         );
     }
 
+    @GetMapping("/userId/{userId}")
+    public List<Appointment> getAllAppointmentsOfUser(@PathVariable int userId){
+        return appointmentService.getAllAppointmentsOfUser(userId);
+    }
+
+    @GetMapping("/doctorId/{doctorId}")
+    public List<Appointment> getAllAppointmentsOfDoctor(@PathVariable int doctorId){
+        return appointmentService.getAllAppointmentsOfDoctor(doctorId);
+    }
+
 }
